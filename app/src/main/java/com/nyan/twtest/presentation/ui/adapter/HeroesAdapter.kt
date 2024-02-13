@@ -1,10 +1,12 @@
 package com.nyan.twtest.presentation.ui.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.nyan.twtest.R
 import com.nyan.twtest.databinding.ListItemHeroBinding
 import com.nyan.twtest.domain.entity.HeroEntity
 
@@ -38,16 +40,18 @@ class HeroesAdapter(private var list: List<HeroEntity>,
 
     class ViewHolder(private val binding: ListItemHeroBinding) : RecyclerView.ViewHolder(binding.root) {
 
+        val context: Context = binding.root.context
+
         fun bind(item: HeroEntity) {
             binding.tvName.text = item.name
             binding.tvRating.text = when (item.rating) {
-                1f -> { "Normal" }
-                2f -> { "Very Good" }
-                3f -> { "Awesome" }
-                else -> { "No rating" }
+                1f -> { ContextCompat.getString(context, R.string.rating_1) }
+                2f -> { ContextCompat.getString(context, R.string.rating_2) }
+                3f -> { ContextCompat.getString(context, R.string.rating_3) }
+                else -> { ContextCompat.getString(context, R.string.no_rating) }
             }
             item.photo?.let {
-                binding.ivProfile.setImageDrawable(ContextCompat.getDrawable(binding.root.context, it))
+                binding.ivProfile.setImageDrawable(ContextCompat.getDrawable(context, it))
             }
         }
     }

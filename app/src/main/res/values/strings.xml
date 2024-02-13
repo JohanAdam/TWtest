@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">TWTest</string>
+    <string name="app_name">Avengers</string>
+    <string name="rating_1">Normal</string>
+    <string name="rating_2">Very Good</string>
+    <string name="rating_3">Awesome</string>
+    <string name="no_rating">No Rating</string>
 </resources>

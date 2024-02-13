@@ -1,11 +1,14 @@
 package com.nyan.twtest.presentation.ui.dashboard
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.nyan.twtest.R
 import com.nyan.twtest.databinding.FragmentDashboardBinding
 import com.nyan.twtest.presentation.base.BaseFragment
 import com.nyan.twtest.presentation.ui.adapter.HeroesAdapter
@@ -38,7 +41,7 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>({
     }
 
     private fun initViews() {
-        bActivity?.setToolbarTitle("Avengers", false)
+        bActivity?.setToolbarTitle(ContextCompat.getString(requireContext(), R.string.app_name), false)
 
         heroesAdapter = HeroesAdapter(emptyList()) {
             bActivity?.replaceFragment(
