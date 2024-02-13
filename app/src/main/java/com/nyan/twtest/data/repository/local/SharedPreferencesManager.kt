@@ -37,13 +37,6 @@ constructor(
             editor.putString(USER_NAME, value).apply()
         }
 
-//    var dummyDataset: String
-//        get() = sharedPrefs.getString(DUMMY_DATASET, "") ?: ""
-//        set(value) {
-//            editor.putString(DUMMY_DATASET, value)
-//        }
-
-
     private val gson = Gson()
     private val type = object : TypeToken<List<HeroResp>>() {}.type
     var heroList: List<HeroResp>

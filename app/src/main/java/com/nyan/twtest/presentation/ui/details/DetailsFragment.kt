@@ -39,9 +39,7 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding>({ inflater,
     }
 
     private fun initView() {
-        bind.ratingBar.setOnRatingBarChangeListener { _, rating, _ ->
-            viewModel.setRating(rating)
-        }
+        bind.ratingBar.setOnRatingChangeListener { _, rating, _ -> viewModel.setRating(rating) }
     }
 
     private fun setObservers() {
