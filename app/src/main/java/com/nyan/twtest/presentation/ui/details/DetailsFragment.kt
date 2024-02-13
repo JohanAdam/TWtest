@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import com.nyan.twtest.R
 import com.nyan.twtest.databinding.FragmentDetailsBinding
 import com.nyan.twtest.presentation.base.BaseFragment
 import com.nyan.twtest.presentation.utils.EventObserver
