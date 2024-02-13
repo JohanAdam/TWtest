@@ -1,6 +1,5 @@
 package com.nyan.twtest.presentation.ui.dashboard
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,7 +30,6 @@ constructor(
     val msg: LiveData<Event<String>> get() = _msg
 
     fun getHeroes() {
-        Log.d(TAG, "getHeroes: ")
         localRepository.loadHero().onEach { dataState ->
             _loading.value = Event(false)
             when (dataState) {
@@ -42,15 +40,10 @@ constructor(
                     _loading.value = Event(true)
                 }
                 is DataState.Success -> {
-                    Log.d(TAG, "getHeroes: ${dataState.data?.size}")
                     _heroList.value = Event(dataState.data)
                 }
             }
         }.launchIn(viewModelScope)
-    }
-
-    companion object {
-        private const val TAG = "DashboardViewModel"
     }
 
 }
