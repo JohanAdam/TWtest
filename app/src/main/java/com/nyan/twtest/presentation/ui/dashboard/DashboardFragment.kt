@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.nyan.twtest.databinding.FragmentDashboardBinding
 import com.nyan.twtest.presentation.base.BaseFragment
 import com.nyan.twtest.presentation.ui.adapter.HeroesAdapter
+import com.nyan.twtest.presentation.ui.details.DetailsFragment
 import com.nyan.twtest.presentation.utils.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,10 +39,10 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>({
 
     private fun initViews() {
         heroesAdapter = HeroesAdapter(emptyList()) {
-//            bActivity?.replaceFragment(
-//                fragment = DetailsFragment.newInstance(it.id),
-//                addToBackStack = true
-//            )
+            bActivity?.replaceFragment(
+                fragment = DetailsFragment.newInstance(it.id),
+                addToBackStack = true
+            )
         }
 
         bind.rvHeroes.apply {
