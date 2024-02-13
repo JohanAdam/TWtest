@@ -2,12 +2,14 @@ package com.nyan.twtest.presentation.ui.dashboard
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
+import android.widget.Toast
 import androidx.fragment.app.viewModels
-import com.nyan.twtest.R
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.nyan.twtest.databinding.FragmentDashboardBinding
 import com.nyan.twtest.presentation.base.BaseFragment
-import com.nyan.twtest.presentation.ui.details.DetailsFragment
+import com.nyan.twtest.presentation.ui.adapter.HeroesAdapter
+import com.nyan.twtest.presentation.utils.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,19 +26,48 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>({
 
     private val viewModel: DashboardViewModel by viewModels()
 
+    private lateinit var heroesAdapter: HeroesAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bActivity?.setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.teal))
 
-        bind.btnNext.setOnClickListener {
-            viewModel.openNext()
-            bActivity?.replaceFragment(
-                fragment = DetailsFragment.newInstance(1),
-                addToBackStack = true
-            )
+        initViews()
+        setObservers()
+        viewModel.getHeroes()
+    }
+
+    private fun initViews() {
+        heroesAdapter = HeroesAdapter(emptyList()) {
+//            bActivity?.replaceFragment(
+//                fragment = DetailsFragment.newInstance(it.id),
+//                addToBackStack = true
+//            )
+        }
+
+        bind.rvHeroes.apply {
+            this.adapter = heroesAdapter
+            this.layoutManager = LinearLayoutManager(requireContext())
+            this.addItemDecoration(DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL))
         }
     }
 
+    private fun setObservers() {
+
+        viewModel.loading.observe(viewLifecycleOwner, EventObserver { isLoad ->
+            if (isLoad) showLoading() else hideLoading()
+        })
+
+        viewModel.msg.observe(viewLifecycleOwner, EventObserver {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        })
+
+        viewModel.heroList.observe(viewLifecycleOwner, EventObserver {
+            it?.let {
+                heroesAdapter.updateData(it)
+            }
+        })
+
+    }
 
 
 }
