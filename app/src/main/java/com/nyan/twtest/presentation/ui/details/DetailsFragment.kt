@@ -11,10 +11,9 @@ import com.nyan.twtest.presentation.utils.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailsFragment: BaseFragment<FragmentDetailsBinding>({
-        inflater,
-        container,
-        attachToParent ->
+class DetailsFragment : BaseFragment<FragmentDetailsBinding>({ inflater,
+                                                               container,
+                                                               attachToParent ->
     FragmentDetailsBinding.inflate(inflater, container, attachToParent)
 }) {
 
@@ -40,11 +39,9 @@ class DetailsFragment: BaseFragment<FragmentDetailsBinding>({
     }
 
     private fun initView() {
-
         bind.ratingBar.setOnRatingBarChangeListener { _, rating, _ ->
             viewModel.setRating(rating)
         }
-
     }
 
     private fun setObservers() {
@@ -57,9 +54,16 @@ class DetailsFragment: BaseFragment<FragmentDetailsBinding>({
         })
 
         viewModel.result.observe(viewLifecycleOwner, EventObserver {
+            bActivity?.setToolbarTitle(it.name ?: "", true)
+
             bind.ratingBar.rating = it.rating
             it.photo?.let { drawableRes ->
-                bind.ivProfile.setImageDrawable(ContextCompat.getDrawable(requireContext(), drawableRes))
+                bind.ivProfile.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        drawableRes
+                    )
+                )
             }
         })
 

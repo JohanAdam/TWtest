@@ -16,6 +16,12 @@ abstract class BasicActivity<F: Fragment>: BaseActivity<ActivityBasicBinding>() 
         super.onCreate(savedInstanceState)
         bindContentView(ActivityBasicBinding::inflate)
 
+        toolbar = bind.toolbar
+        setSupportActionBar(toolbar)
+        toolbar?.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
         savedInstanceState?.let {
             fragment = supportFragmentManager.findFragmentByTag("baseFragment") as F
         } ?: let {

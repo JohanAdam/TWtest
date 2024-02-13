@@ -2,8 +2,10 @@ package com.nyan.twtest.presentation.base
 
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -15,6 +17,8 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
 
     protected lateinit var bind: T
     private var loadingDialog: LoadingDialog? = null
+
+    var toolbar: Toolbar? = null
     private var frameLayout: Int? = null
 
     fun bindContentView(inflate: (LayoutInflater) -> T) {
@@ -35,6 +39,15 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
 
     fun setStatusBarColor(@ColorInt color: Int) {
         window.statusBarColor = color
+    }
+
+    fun setToolbarTitle(title: String, homeAsUpEnable: Boolean? = false) {
+        supportActionBar.apply {
+            this?.title = ""
+            this?.setDisplayHomeAsUpEnabled(homeAsUpEnable ?: false)
+        }
+        val toolbarTitle = toolbar?.findViewById<TextView>(R.id.tvToolbarTitle)
+        toolbarTitle?.text = title
     }
 
     fun replaceFragment(fragment: Fragment, addToBackStack: Boolean) {

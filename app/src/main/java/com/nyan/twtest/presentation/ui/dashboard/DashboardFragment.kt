@@ -38,6 +38,8 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>({
     }
 
     private fun initViews() {
+        bActivity?.setToolbarTitle("Avengers", false)
+
         heroesAdapter = HeroesAdapter(emptyList()) {
             bActivity?.replaceFragment(
                 fragment = DetailsFragment.newInstance(it.id),
