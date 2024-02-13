@@ -1,10 +1,9 @@
 package com.nyan.twtest.data.repository.remote
 
 import com.nyan.twtest.data.model.details.mapToDomain
-import com.nyan.twtest.data.service.NetworkService
+import com.nyan.twtest.data.service.remote.NetworkService
 import com.nyan.twtest.domain.entity.details.DetailsEntity
 import com.nyan.twtest.domain.network.ErrorHandler
-import com.nyan.twtest.domain.repository.RemoteRepository
 import com.nyan.twtest.domain.state.DataState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

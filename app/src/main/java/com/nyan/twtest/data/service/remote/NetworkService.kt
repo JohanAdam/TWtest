@@ -1,4 +1,4 @@
-package com.nyan.twtest.data.service
+package com.nyan.twtest.data.service.remote
 
 import com.nyan.twtest.data.model.details.DetailsResp
 import retrofit2.http.GET
