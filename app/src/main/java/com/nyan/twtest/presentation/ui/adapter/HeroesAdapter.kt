@@ -41,9 +41,9 @@ class HeroesAdapter(private var list: List<HeroEntity>,
         fun bind(item: HeroEntity) {
             binding.tvName.text = item.name
             binding.tvRating.text = when (item.rating) {
-                1 -> { "Normal" }
-                2 -> { "Very Good" }
-                3 -> { "Awesome" }
+                1f -> { "Normal" }
+                2f -> { "Very Good" }
+                3f -> { "Awesome" }
                 else -> { "No rating" }
             }
             item.photo?.let {

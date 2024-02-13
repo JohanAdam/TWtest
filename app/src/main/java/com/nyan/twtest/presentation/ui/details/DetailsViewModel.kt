@@ -29,8 +29,11 @@ constructor(
     private val _msg: MutableLiveData<Event<String>> = MutableLiveData()
     val msg: LiveData<Event<String>> get() = _msg
 
+    private var id: Int? = 0
+
     fun getDetails(id: Int?) {
         id?.let {
+            this.id = id
             localRepository.getHeroDetails(id).onEach { dataState ->
                 _loading.value = Event(false)
                 when(dataState) {
@@ -47,6 +50,27 @@ constructor(
                         data?.let {
                             _result.value = Event(it)
                         }
+                    }
+                }
+            }.launchIn(viewModelScope)
+        }
+    }
+
+    fun setRating(rating: Float) {
+        id?.let {
+            localRepository.setRating(it, rating).onEach { dataState ->
+                _loading.value = Event(false)
+                when(dataState) {
+                    is DataState.Loading -> {
+                        _loading.value = Event(true)
+                    }
+
+                    is DataState.Failed -> {
+                        _msg.value = Event(dataState.error.message ?: "")
+                    }
+
+                    is DataState.Success -> {
+
                     }
                 }
             }.launchIn(viewModelScope)

@@ -39,7 +39,13 @@ class DetailsFragment: BaseFragment<FragmentDetailsBinding>({
         setObservers()
     }
 
-    private fun initView() { }
+    private fun initView() {
+
+        bind.ratingBar.setOnRatingBarChangeListener { _, rating, _ ->
+            viewModel.setRating(rating)
+        }
+
+    }
 
     private fun setObservers() {
         viewModel.loading.observe(viewLifecycleOwner, EventObserver { isLoad ->
@@ -51,6 +57,7 @@ class DetailsFragment: BaseFragment<FragmentDetailsBinding>({
         })
 
         viewModel.result.observe(viewLifecycleOwner, EventObserver {
+            bind.ratingBar.rating = it.rating
             it.photo?.let { drawableRes ->
                 bind.ivProfile.setImageDrawable(ContextCompat.getDrawable(requireContext(), drawableRes))
             }

@@ -9,4 +9,9 @@ class LocalDataSource(
     fun getHeroList(): List<HeroResp> {
         return sharedPreferencesManager.heroList
     }
+
+    fun getHero(id: Int): HeroResp? {
+        val heroList = getHeroList()
+        return heroList.find { it.id == id }
+    }
 }

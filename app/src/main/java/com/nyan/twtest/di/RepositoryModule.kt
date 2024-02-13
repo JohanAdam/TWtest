@@ -1,6 +1,7 @@
 package com.nyan.twtest.di
 
 import com.nyan.twtest.data.repository.local.LocalRepositoryImpl
+import com.nyan.twtest.data.repository.local.SharedPreferencesManager
 import com.nyan.twtest.data.service.local.LocalDataSource
 import com.nyan.twtest.domain.repository.LocalRepository
 import dagger.Module
@@ -13,8 +14,8 @@ import dagger.hilt.components.SingletonComponent
 class RepositoryModule {
 
     @Provides
-    fun provideLocalRepository(dataSource: LocalDataSource): LocalRepository {
-        return LocalRepositoryImpl(dataSource)
+    fun provideLocalRepository(dataSource: LocalDataSource, sharedPreferencesManager: SharedPreferencesManager): LocalRepository {
+        return LocalRepositoryImpl(dataSource, sharedPreferencesManager)
     }
 
 }

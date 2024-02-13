@@ -10,7 +10,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class LocalRepositoryImpl(
-    private val localDataSource: LocalDataSource
+    private val localDataSource: LocalDataSource,
+    private val sharedPreferencesManager: SharedPreferencesManager
 ): LocalRepository {
 
     override fun loadHero(): Flow<DataState<List<HeroEntity>?>> = flow {
@@ -34,13 +35,29 @@ class LocalRepositoryImpl(
         emit(DataState.Loading)
 
         try {
-            val heroList = localDataSource.getHeroList()
+            val hero = localDataSource.getHero(id)
+            emit(DataState.Success(hero?.mapToDomain()))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(DataState.Failed(ErrorHandler(e)))
+        }
+    }
 
-            val heroEntity = heroList.map {
-                it.mapToDomain()
-            }.find { it.id == id }
+    override fun setRating(id: Int, rating: Float): Flow<DataState<Unit>> = flow {
+        emit(DataState.Loading)
 
-            emit(DataState.Success(heroEntity))
+        try {
+            val heroList = localDataSource.getHeroList().toMutableList()
+
+            val heroToUpdate = heroList.find { it.id == id }
+
+            heroToUpdate?.let {
+                it.rating = rating.toInt()
+                sharedPreferencesManager.heroList = heroList
+                emit(DataState.Success(Unit))
+            } ?: run {
+                emit(DataState.Failed(ErrorHandler(Exception("Hero with ID $id not found"))))
+            }
         } catch (e: Exception) {
             e.printStackTrace()
             emit(DataState.Failed(ErrorHandler(e)))

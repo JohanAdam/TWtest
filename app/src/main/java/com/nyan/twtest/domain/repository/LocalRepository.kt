@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 interface LocalRepository {
     fun loadHero(): Flow<DataState<List<HeroEntity>?>>
     fun getHeroDetails(id: Int): Flow<DataState<HeroEntity?>>
-
+    fun setRating(id: Int, rating: Float): Flow<DataState<Unit>>
 }

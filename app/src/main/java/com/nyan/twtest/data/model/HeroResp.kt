@@ -8,7 +8,7 @@ data class HeroResp (
     @SerializedName("id") val id: Int,
     @SerializedName("heroName") val heroName: String? = null,
     @SerializedName("photo") val photoRes: Int? = null,
-    @SerializedName("rating") val rating: Int = 0,
+    @SerializedName("rating") var rating: Int = 0,
 )
 
 fun HeroResp.mapToDomain(): HeroEntity {
@@ -16,6 +16,6 @@ fun HeroResp.mapToDomain(): HeroEntity {
         id = this.id,
         name = this.heroName,
         photo = this.photoRes,
-        rating = this.rating
+        rating = this.rating.toFloat()
     )
 }
